@@ -1,17 +1,13 @@
 {% extends 'base.html' %}
 {% block title %}
-👑Новости для королей👑
+    👑Новости для королей👑
 {% endblock %}
 {% block content %}
     <div class="container">
         {#navbar#}
         <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #ffffff;">
-            <a class="navbar-brand" href="#">👑King News👑</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+            <a class="navbar-brand" href="{% url 'news:all_news' %}">👑King News👑</a>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
                         <a class="nav-link active" href="#">🖊Добавить новость<span class="sr-only">(current)</span></a>
@@ -22,15 +18,11 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             {% for new in all_news %}
-                                <a class="dropdown-item" href="#">{{ new.category.title }}<span class="badge badge-light">{{ new.category.cnt }}</span></a>
+                                <a class="dropdown-item" href="{{ new.category.get_absolute_url }}">{{ new.category.title }}<span class="badge badge-light">{{ new.category.cnt }}</span></a>
                             {% endfor %}
                         </div>
                     </li>
                 </ul>
-                <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form>
             </div>
         </nav>
         {#endnavbar#}
@@ -45,7 +37,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row row-cols-2">
             {% for new in all_news %}
                 <div class="col">
                     <div class="card shadow-sm">
@@ -58,7 +50,7 @@
                             <hr>
                             <a style="text-decoration: none;" href="#"><p>{{ new.author }}</p></a>
                             <hr>
-                            <a style="text-decoration: none;" href="#"><p>{{ new.category.title }}</p></a>
+                            <a style="text-decoration: none;" href="{{ new.category.get_absolute_url }}"><p>{{ new.category.title }}</p></a>
                             <div class="d-flex justify-content-between align-items-center">
 
                                 <div class="btn-group">
@@ -68,14 +60,14 @@
                                         </button>
                                     </form>
                                 </div>
-                                <small class="text-muted">{{ item.created_at }}</small>
+                                <small class="text-muted">{{ new.created_at }}</small>
                             </div>
                         </div>
                     </div>
                 </div>
             {% endfor %}
         </div>
-
-        {#endcontent#}
+    </div>
+    {#endcontent#}
 
 {% endblock %}
