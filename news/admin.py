@@ -7,7 +7,7 @@ from news.models import News, Category
 class NewsAdmin(admin.ModelAdmin):
     list_display = ['id', 'author', 'title', 'content', 'created_at', 'is_published', 'category']
     list_filter = ['created_at', 'category']
-    list_display_links = ['id', 'title', 'category', 'content','author']
+    list_display_links = ['id', 'title', 'category', 'content', 'author']
     list_editable = ['is_published']
     actions = ['publish', 'hide']
 
@@ -20,6 +20,7 @@ class NewsAdmin(admin.ModelAdmin):
         queryset.update(is_published=0)
 
     hide.short_description = 'Скрыть выбранные новости'
+
 
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ['id', 'title']

@@ -1,46 +1,43 @@
 {% extends 'base.html' %}
 {% block title %}
-
+    {{ title_category }}
 {% endblock %}
 {% block content %}
-    <div class="container">
-        {#navbar#}
-        {% include 'inc/_nav.html' %}
-        {#endnavbar#}
-        <br>
-        {#content#}
-        <h1 class="display-4">{{ title_category }}</h1>
+    {#navbar#}
+    {% include 'inc/_nav.html' %}
+    {#endnavbar#}
+    <br>
+    {#content#}
+    <h1 class="display-4">{{ title_category }}</h1>
 
-        <div class="row row-cols-2">
-            {% for category in detail_category %}
-                <div class="col">
-                    <div class="card shadow-sm">
-                        <img class="bd-placeholder-img card-img-top" focusable="false" role="img"
-                             width="100%" height="100%" src="{{ category.photo.url }}">
-                        <div class="card-body">
-                            <h3 class="card-text">{{ category.title }}</h3>
-                            <p class="card-text">{{ category.content|truncatewords:10 }}</p>
+    <div class="row row-cols-2">
+        {% for category in detail_category %}
+            <div class="col">
+                <div class="card shadow-sm">
+                    <img class="bd-placeholder-img card-img-top" focusable="false" role="img"
+                         width="100%" height="100%" src="{{ category.photo.url }}">
+                    <div class="card-body">
+                        <h3 class="card-text">{{ category.title }}</h3>
+                        <p class="card-text">{{ category.content|truncatewords:10 }}</p>
 
-                            <hr>
-                            <a style="text-decoration: none;" href="#"><p>{{ category.author }}</p></a>
-                            <hr>
-                            <div class="d-flex justify-content-between align-items-center">
+                        <hr>
+                        <a style="text-decoration: none;" href="#"><p>{{ category.author }}</p></a>
+                        <hr>
+                        <div class="d-flex justify-content-between align-items-center">
 
-                                <div class="btn-group">
-                                    <form action="{{ category.get_absolute_url }}">
-                                        <button type="submit" class="btn btn-sm btn-outline-secondary">
-                                            Читать далее
-                                        </button>
-                                    </form>
-                                </div>
-                                <small class="text-muted">{{ category.created_at }}</small>
+                            <div class="btn-group">
+                                <form action="{{ category.get_absolute_url }}">
+                                    <button type="submit" class="btn btn-sm btn-outline-secondary">
+                                        Читать далее
+                                    </button>
+                                </form>
                             </div>
+                            <small class="text-muted">{{ category.created_at }}</small>
                         </div>
                     </div>
                 </div>
-            {% endfor %}
-        </div>
+            </div>
+        {% endfor %}
     </div>
     {#endcontent#}
-
 {% endblock %}

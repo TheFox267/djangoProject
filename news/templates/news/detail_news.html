@@ -1,27 +1,23 @@
 {% extends 'base.html' %}
 {% block title %}
     {{ detail_news.title }}
-
-
 {% endblock %}
 {% block content %}
-    <div class="container">
-        {#navbar#}
-        {% include 'inc/_nav.html' %}
-        {#endnavbar#}
+    {#navbar#}
+    {% include 'inc/_nav.html' %}
+    {#endnavbar#}
+    <br>
+    {#content#}
+    <div class="jumbotron p-4 p-md-5 text-white rounded bg-dark">
+        <h1 class="display-4 font-italic">{{ detail_news.title }}</h1>
+        <hr style="color: #ffffff;">
+        <h4 class="display-5">{{ detail_news.content }}</h4>
         <br>
-        {#content#}
-        <div class="jumbotron p-4 p-md-5 text-white rounded bg-dark">
-            <h1 class="display-4 font-italic">{{ detail_news.title }}</h1>
-            <hr style="color: #ffffff;">
-            <h4 class="display-5">{{ detail_news.content }}</h4>
-            <br>
-            <img class="rounded mx-auto d-block img-thumbnail" style="max-width: 1000px;" src="{{ detail_news.photo.url }}"/>
-            <br>
-            <p class="lead mb-">Автор: {{ detail_news.author }}</p>
-            <p class="lead mb-">Категория: <a href="{{ detail_news.category.get_absolute_url }}" class="text-white font-weight-bold">{{ detail_news.category.title }}</a></p>
-            <p class="lead mb-">Дата публикации: {{ detail_news.created_at }}</p>
-        </div>
-        {#endcontent#}
+        <img class="rounded mx-auto d-block img-thumbnail" style="max-width: 1000px;" src="{{ detail_news.photo.url }}"/>
+        <br>
+        <p class="lead mb-">Автор: {{ detail_news.author }}</p>
+        <p class="lead mb-">Категория: <a href="{{ detail_news.category.get_absolute_url }}" class="text-white font-weight-bold">{{ detail_news.category.title }}</a></p>
+        <p class="lead mb-">Дата публикации: {{ detail_news.created_at }}</p>
     </div>
+    {#endcontent#}
 {% endblock %}

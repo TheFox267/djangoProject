@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block content %}
+    {% include 'inc/_nav.html' %}
+    <form action="{% url 'news:add_news' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.non_field.errors }}
+        {#author#}
+        <div class="form-group">
+            <label for="{{ form.author.id_for_label }}">Автор: </label>
+            {{ form.author }}
+            <div class="invalid-feedback">
+                {{ form.author.errors }}
+            </div>
+        </div>
+        {#end author#}
+        {#title#}
+        <div class="form-group">
+            <label for="{{ form.title.id_for_label }}">Название: </label>
+            {{ form.title }}
+            <div class="invalid-feedback">
+                {{ form.title.errors }}
+            </div>
+        </div>
+        {#end title#}
+        {#content#}
+        <div class="form-group">
+            <label for="{{ form.content.id_for_label }}">Контент: </label>
+            {{ form.content }}
+            <div class="invalid-feedback">
+                {{ form.content.errors }}
+            </div>
+        </div>
+        {#end content#}
+        {#photo#}
+        <div class="form-group">
+            <label for="{{ form.photo.id_for_label }}">Постер: </label>
+            <br>
+            {{ form.photo }}
+            <div class="invalid-feedback">
+                {{ form.photo.errors }}
+            </div>
+        </div>
+        {#end photo#}
+        {#is_published#}
+        <div class="form-group">
+            <label for="{{ form.is_published.id_for_label }}">Опубликовать? </label>
+            {{ form.is_published }}
+            <div class="invalid-feedback">
+                {{ form.is_published.errors }}
+            </div>
+        </div>
+        {#end is_published#}
+        {#category#}
+        <div class="form-group">
+            <label for="{{ form.category.id_for_label }}">Категория: </label>
+            {{ form.category }}
+            <div class="invalid-feedback">
+                {{ form.category.errors }}
+            </div>
+        </div>
+        {#end category#}
+        <button type="submit" class="btn btn-primary btn-block">Добавить новость</button>
+    </form>
+
+
+{% endblock %}

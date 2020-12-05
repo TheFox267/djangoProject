@@ -1,6 +1,7 @@
 # Create your views here.
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView
 
+from news.forms import AddNewsForm
 from news.models import News, Category
 
 
@@ -10,7 +11,7 @@ class AllNews(ListView):
     context_object_name = 'all_news'
 
     def get_queryset(self):
-        return News.objects.filter(is_published=True)
+        return News.objects.filter(is_published=True).order_by('-created_at')
 
 
 class DetailNews(DetailView):
@@ -34,3 +35,12 @@ class DetailCategory(ListView):
         context = super(DetailCategory, self).get_context_data(**kwargs)
         context['title_category'] = Category.objects.get(pk=self.kwargs['category_id']).title
         return context
+
+
+class AddNews(CreateView):
+    form_class = AddNewsForm
+    template_name = 'news/add_news.html'
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super(AddNews, self).form_valid(form)
