@@ -1,2 +1,80 @@
 {% extends 'base.html' %}
 
+{% block content %}
+    <div class="container">
+        {#navbar#}
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">👑King News👑</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">🖊Добавить новость<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item dropdown active">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            🗃Категории
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            {% for new in all_news %}
+                                <a class="dropdown-item" href="#">{{ new.category.title }}<span class="badge badge-light">{{ new.category.cnt }}</span></a>
+                            {% endfor %}
+                        </div>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+        </nav>
+        {#endnavbar#}
+        <br>
+
+        {#content#}
+        <div class="jumbotron p-4 p-md-5 text-white rounded bg-dark">
+            <div class="col-md-6 px-0">
+                <h1 class="display-4 font-italic">Title of a longer featured blog post</h1>
+                <p class="lead my-3">Multiple lines of text that form the lede, informing new readers quickly and efficiently about what’s most interesting in this post’s contents.</p>
+                <p class="lead mb-0"><a href="#" class="text-white font-weight-bold">Continue reading...</a></p>
+            </div>
+        </div>
+
+        <div class="row">
+            {% for new in all_news %}
+                <div class="col">
+                    <div class="card shadow-sm">
+                        <img class="bd-placeholder-img card-img-top" focusable="false" role="img"
+                             width="100%" height="100%" src="{{ new.photo.url }}">
+                        <div class="card-body">
+                            <h3 class="card-text">{{ new.title }}</h3>
+                            <p class="card-text">{{ new.content|truncatewords:10 }}</p>
+
+                            <hr>
+                            <a style="text-decoration: none;" href="#"><p>{{ new.author }}</p></a>
+                            <hr>
+                            <a style="text-decoration: none;" href="#"><p>{{ new.category.title }}</p></a>
+                            <div class="d-flex justify-content-between align-items-center">
+
+                                <div class="btn-group">
+                                    <form action="#">
+                                        <button type="submit" class="btn btn-sm btn-outline-secondary">
+                                            Читать далее
+                                        </button>
+                                    </form>
+                                </div>
+                                <small class="text-muted">{{ item.created_at }}</small>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            {% endfor %}
+        </div>
+
+        {#endcontent#}
+
+{% endblock %}
