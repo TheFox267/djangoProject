@@ -3,6 +3,7 @@ from django.db import models
 
 # Create your models here.
 from django.db.models import Count
+from django.urls import reverse
 
 
 class News(models.Model):
@@ -18,8 +19,8 @@ class News(models.Model):
     def __str__(self):
         return f"Заголовок новости: {self.title}"
 
-    # def get_absolute_url(self):
-    #     return reverse('')
+    def get_absolute_url(self):
+        return reverse('news:detail_news',kwargs={'pk':self.pk})
 
     class Meta:
         verbose_name = 'новость'

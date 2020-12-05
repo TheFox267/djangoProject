@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}
+    {{ detail_news.title }}
+
+
+{% endblock %}
+{% block content %}
+    <div class="container">
+        {#navbar#}
+        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #ffffff;">
+            <a class="navbar-brand" href="{% url 'news:all_news' %}">👑King News👑</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </nav>
+        {#endnavbar#}
+        <br>
+        {#content#}
+        <div class="jumbotron p-4 p-md-5 text-white rounded bg-dark">
+            <h1 class="display-4 font-italic">{{ detail_news.title }}</h1>
+            <hr style="color: #ffffff; ">
+            <h4 class="display-5">{{ detail_news.content }}</h4>
+            <br>
+            <img class="rounded mx-auto d-block img-thumbnail" style="max-width: 1000px;" src="{{ detail_news.photo.url }}"/>
+            <br>
+            <p class="lead mb-">Автор: {{ detail_news.author }} Категория: {{ detail_news.category.title }} Дата публикации: {{ detail_news.created_at }}</p>
+        </div>
+        {#endcontent#}
+    </div>
+{% endblock %}
