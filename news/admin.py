@@ -5,9 +5,9 @@ from news.models import News, Category
 
 
 class NewsAdmin(admin.ModelAdmin):
-    list_display = ['id', 'author', 'title', 'content', 'created_at', 'is_published', 'category']
+    list_display = ['id', 'author', 'title', 'created_at', 'is_published', 'category']
     list_filter = ['created_at', 'category']
-    list_display_links = ['id', 'title', 'category', 'content', 'author']
+    list_display_links = ['id', 'title', 'category', 'author']
     list_editable = ['is_published']
     actions = ['publish', 'hide']
 

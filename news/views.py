@@ -9,6 +9,7 @@ class AllNews(ListView):
     model = News
     template_name = 'news/all_news.html'
     context_object_name = 'all_news'
+    paginate_by = 4
 
     def get_queryset(self):
         return News.objects.filter(is_published=True).order_by('-created_at')
@@ -27,6 +28,7 @@ class DetailCategory(ListView):
     model = News
     template_name = 'news/detail_category.html'
     context_object_name = 'detail_category'
+    paginate_by = 4
 
     def get_queryset(self):
         return News.objects.filter(category=self.kwargs['category_id'], is_published=True)
