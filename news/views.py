@@ -1,11 +1,14 @@
 # Create your views here.
+import ast
+
 from django.conf import settings
+from django.contrib import messages
+from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, CreateView
 
 from news.forms import AddNewsForm, FeedbackForm
 from news.models import News, Category
 from django.core.mail import send_mail
-
 
 
 class AllNews(ListView):
@@ -55,12 +58,19 @@ class FeedbackNews(CreateView):
     form_class = FeedbackForm
     template_name = 'news/feedback.html'
 
-    def form_valid(self, form):
-        return super(FeedbackNews, self).form_valid(form)
-    # def form_valid(self, form):
-    #     print(self.request.user.email)
-    #     mail = send_mail(form.cleaned_data['title'], form.cleaned_data['content'], settings.EMAIL_HOST_USER, [self.request.user.email], fail_silently=False)
-    #     if mail:
-    #         print('good')
-    #     else:
-    #         print('bad')
+    def get(self, request, *args, **kwargs):
+        form = self.form_class(initial=self.initial)
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            mail = send_mail(subject=f"{form.cleaned_data['subject']}(id = {request.user.id}, username = {request.user.username})", message=form.cleaned_data['content'],
+                             from_email=request.user.email, recipient_list=settings.EMAIL_HOST_USER.split(' '), fail_silently=False)
+            if mail:
+                messages.success(request, 'Письмо успешно отправлено')
+                messages.success(request, 'Спасибо за ваш отзыв')
+                return redirect('news:feedback')
+            else:
+                messages.error(request, 'Ошибка при отправке письма')
+                return render(request, template_name=self.template_name, context={'form': form})

@@ -1,4 +1,6 @@
+from django.contrib.auth import login
 from django.contrib.auth.views import LoginView, LogoutView
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 # Create your views here.
 from django.urls import reverse_lazy
@@ -11,13 +13,19 @@ class RegisterAccount(CreateView):
     form_class = RegisterAccountForm
     template_name = 'account/register.html'
 
-    def form_valid(self, form):
-        form.save()
-        messages.success(self.request, 'Вы успешно зарегистрировались')
-        return redirect('account:login')
+    def get(self, request, *args, **kwargs):
+        form = self.form_class(initial=self.initial)
+        return render(request, self.template_name, {'form': form})
 
-    def form_invalid(self, form):
-        messages.error(self.request, 'Ошибка регистрации')
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(self.request, 'Вы успешно зарегистрировались')
+            return redirect('account:login')
+        else:
+            messages.error(self.request, 'Ошибка регистрации')
+            return render(request, self.template_name, {'form': form})
 
 
 class LoginAccount(LoginView):

@@ -120,8 +120,8 @@ MEDIA_URL = '/media/'
 
 INTERNAL_IPS = ['127.0.0.1']
 
-EMAIL_HOST = 'smtp-relay.gmail.com'
-EMAIL_PORT = '25'  # 465,587
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = '465'  # 465,587
 EMAIL_HOST_USER = 'project.it.cube.mail.send@gmail.com'
 EMAIL_HOST_PASSWORD = email_host_password
 EMAIL_USE_TLS = False
