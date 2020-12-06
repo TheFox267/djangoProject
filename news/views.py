@@ -1,8 +1,11 @@
 # Create your views here.
+from django.conf import settings
 from django.views.generic import ListView, DetailView, CreateView
 
-from news.forms import AddNewsForm
+from news.forms import AddNewsForm, FeedbackForm
 from news.models import News, Category
+from django.core.mail import send_mail
+
 
 
 class AllNews(ListView):
@@ -46,3 +49,18 @@ class AddNews(CreateView):
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super(AddNews, self).form_valid(form)
+
+
+class FeedbackNews(CreateView):
+    form_class = FeedbackForm
+    template_name = 'news/feedback.html'
+
+    def form_valid(self, form):
+        return super(FeedbackNews, self).form_valid(form)
+    # def form_valid(self, form):
+    #     print(self.request.user.email)
+    #     mail = send_mail(form.cleaned_data['title'], form.cleaned_data['content'], settings.EMAIL_HOST_USER, [self.request.user.email], fail_silently=False)
+    #     if mail:
+    #         print('good')
+    #     else:
+    #         print('bad')

@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from account.forms import RegisterAccountForm, LoginAccountForm
+from django.contrib import messages
 
 
 class RegisterAccount(CreateView):
@@ -11,7 +12,12 @@ class RegisterAccount(CreateView):
     template_name = 'account/register.html'
 
     def form_valid(self, form):
+        form.save()
+        messages.success(self.request, 'Вы успешно зарегистрировались')
         return redirect('account:login')
+
+    def form_invalid(self, form):
+        messages.error(self.request, 'Ошибка регистрации')
 
 
 class LoginAccount(LoginView):

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Обратная связь
+{% endblock %}
+
+{% block content %}
+{#    {% if request.user.is_authenticated %}#}
+        <form action="{% url 'news:feedback' %}" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary btn-block">Отправить сообщещие</button>
+        </form>
+{#    {% else %}#}
+{#        <h1><a style="text-decoration-line: none;" href="{% url 'account:login' %}">Вы не вошли в аккаунт</a></h1>#}
+{#    {% endif %}#}
+{% endblock %}

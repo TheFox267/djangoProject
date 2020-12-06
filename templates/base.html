@@ -15,13 +15,23 @@
     </title>
 </head>
 <body>
-{% block navbar %}
-
-{% endblock %}
 
 <div class="container">
-    {% block content %}
-        Content
+    {% include 'inc/_nav.html' %}
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == 'error' %}
+                <div class="alert alert-danger" role="alert">{{ message }}</div>
+            {% else %}
+                <div class="alert alert-success" role="alert">{{ message }}</div>
+            {% endif %}
+
+
+        {% endfor %}
+
+
+    {% endif %}
+    {% block content %}Content
     {% endblock %}
 </div>
 <!-- Optional JavaScript; choose one of the two! -->

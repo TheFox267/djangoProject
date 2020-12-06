@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
 from pathlib import Path
-
+from hidden_data import secret_key,email_host_password
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -19,7 +19,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '$8^*v+bc_%y42kmiubem-$cu#qs6a6j)x%8l*7&0bqal5262l&'
+SECRET_KEY = secret_key
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -117,3 +117,12 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+INTERNAL_IPS = ['127.0.0.1']
+
+EMAIL_HOST = 'smtp-relay.gmail.com'
+EMAIL_PORT = '25'  # 465,587
+EMAIL_HOST_USER = 'project.it.cube.mail.send@gmail.com'
+EMAIL_HOST_PASSWORD = email_host_password
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
