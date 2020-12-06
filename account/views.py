@@ -1,10 +1,9 @@
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import render, redirect
 # Create your views here.
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from account.forms import RegisterAccountForm, LoginAccountForm
-from django.contrib.auth import login, logout
 
 
 class RegisterAccount(CreateView):
@@ -22,3 +21,7 @@ class LoginAccount(LoginView):
 
     def get_success_url(self):
         return self.success_url
+
+
+class LogoutAccount(LogoutView):
+    template_name = 'account/logout.html'

@@ -4,11 +4,11 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link active" href="{% url 'news:add_news' %}">🖊Добавить новость<span class="sr-only">(current)</span></a>
+                <a class="nav-link active" href="{% url 'news:add_news' %}">🖊 Добавить новость<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item dropdown active">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    🗃Категории
+                    🗃 Категории
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     {% get_list_category as categories %}
@@ -20,17 +20,17 @@
             {% if request.user.is_authenticated %}
                 <li class="nav-item dropdown active">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        💼Аккаунт
+                        💼 Добро пожаловать, {{ user.username }}!
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="#">Мой профиль</a>
-                        <a class="dropdown-item" href="#">Выйти</a>
+                        <a class="dropdown-item" href="{% url 'account:logout' %}">Выйти</a>
                     </div>
                 </li>
             {% else %}
                 <li class="nav-item dropdown active">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        💼Аккаунт
+                        💼 Аккаунт
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="{% url 'account:login' %}">Авторизация</a>
