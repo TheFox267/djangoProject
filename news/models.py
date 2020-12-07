@@ -14,7 +14,7 @@ class News(models.Model):
     photo = models.ImageField(upload_to='photos/%Y/%m/%d/', verbose_name='постер', default='photos/default.svg')
     is_published = models.BooleanField(default=True, verbose_name='статус публикации')
     category = models.ForeignKey('Category', on_delete=models.PROTECT, verbose_name='категория', db_index=True, default=None)
-    audio = models.FileField(upload_to='audio/%Y/%m/%d/', verbose_name='аудио', null=True)
+    audio = models.FileField(upload_to='audio/%Y/%m/%d/', verbose_name='аудио', blank=True)
 
     def __str__(self):
         return f"Заголовок новости: {self.title}"

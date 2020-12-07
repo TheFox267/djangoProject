@@ -8,25 +8,23 @@
     {#content#}
     <div class="jumbotron p-4 p-md-5 text-white rounded bg-dark">
         <h1 class="display-4 font-italic">{{ detail_news.title }}</h1>
-        {% if detail_news.audio == 'None' %}
-
-        {% else %}
+        <p class="lead mb-">Автор: {{ detail_news.author }}</p>
+        <p class="lead mb-">Категория: <a href="{{ detail_news.category.get_absolute_url }}"
+                                          class="text-white font-weight-bold">{{ detail_news.category.title }}</a></p>
+        <p class="lead mb-">Дата публикации: {{ detail_news.created_at }}</p>
+        {% if detail_news.audio %}
             <audio controls>
                 <source src="{{ detail_news.audio.url }}" type="audio/mpeg">
                 Тег audio не поддерживается вашим браузером.
                 <a href="{{ detail_news.audio.url }}">Скачайте музыку</a>.
             </audio>
+        {% else %}
+
         {% endif %}
 
         <hr style="color: #ffffff;">
-        <h4 class="display-5">{{ detail_news.content }}</h4>
-        <br>
-        <img class="rounded mx-auto d-block img-thumbnail" style="max-width: 1000px;" src="{{ detail_news.photo.url }}" alt="lol"/>
-        <br>
-        <p class="lead mb-">Автор: {{ detail_news.author }}</p>
-        <p class="lead mb-">Категория: <a href="{{ detail_news.category.get_absolute_url }}"
-                                          class="text-white font-weight-bold">{{ detail_news.category.title }}</a></p>
-        <p class="lead mb-">Дата публикации: {{ detail_news.created_at }}</p>
+        <h4 class="display-5">{{ detail_news.content|safe }}</h4>
+
     </div>
     {#endcontent#}
 {% endblock %}
