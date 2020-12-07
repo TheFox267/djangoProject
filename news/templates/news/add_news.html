@@ -9,9 +9,11 @@
         {% if request.user.is_authenticated %}
             <form action="{% url 'news:add_news' %}" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
+
                 {{ form.non_field.errors }}
                 {#title#}
                 <div class="form-group">
+
                     <label for="{{ form.title.id_for_label }}">Название: </label>
                     {{ form.title }}
                     <div class="invalid-feedback">
@@ -56,6 +58,7 @@
                         {{ form.category.errors }}
                     </div>
                 </div>
+                {#end category#}
                 <div class="form-group">
                     <label for="{{ form.audio.id_for_label }}">Аудио: </label>
                     <br>
@@ -64,7 +67,7 @@
                         {{ form.audio.errors }}
                     </div>
                 </div>
-                {#end category#}
+
                 <button type="submit" class="btn btn-primary btn-block">Добавить новость</button>
             </form>
         {% else %}

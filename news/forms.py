@@ -5,7 +5,7 @@ from news.models import News
 
 
 class AddNewsForm(forms.ModelForm):
-    content = forms.CharField(widget=CKEditorUploadingWidget())
+    content = forms.CharField(widget=CKEditorUploadingWidget(), label='Контент')
 
     class Meta:
         model = News

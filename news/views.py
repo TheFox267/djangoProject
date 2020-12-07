@@ -17,7 +17,7 @@ class AllNews(ListView):
     paginate_by = 4
 
     def get_queryset(self):
-        return News.objects.filter(is_published=True).order_by('-created_at')
+        return News.objects.filter(is_published=True).select_related('category', 'author').order_by('-created_at')
 
 
 class DetailNews(DetailView):
@@ -26,7 +26,11 @@ class DetailNews(DetailView):
     context_object_name = 'detail_news'
 
     def get_queryset(self):
-        return News.objects.filter(pk=self.kwargs['pk'], is_published=True)
+        model = News.objects.get(pk=self.kwargs['pk'])
+        if self.request.user.id == model.author.id:
+            return News.objects.filter(pk=self.kwargs['pk'])
+        else:
+            return News.objects.filter(pk=self.kwargs['pk'], is_published=True)
 
 
 class DetailCategory(ListView):
@@ -36,7 +40,7 @@ class DetailCategory(ListView):
     paginate_by = 4
 
     def get_queryset(self):
-        return News.objects.filter(category=self.kwargs['category_id'], is_published=True)
+        return News.objects.filter(category=self.kwargs['category_id'], is_published=True).select_related('author').order_by('-created_at')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(DetailCategory, self).get_context_data(**kwargs)
