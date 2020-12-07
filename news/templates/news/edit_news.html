@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    Создать новость
+{% endblock %}
+
+{% block content %}
+    <div class="jumbotron p-4 p-md-5 text-white rounded bg-dark">
+        {% if request.user.is_authenticated %}
+            <form action="{% url 'news:edit_news' news.pk %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.non_field.errors }}
+                {#title#}
+                <div class="form-group">
+                    <label for="{{ form.title.id_for_label }}">Название: </label>
+                    {{ form.title }}
+                    <div class="invalid-feedback">
+                        {{ form.title.errors }}
+                    </div>
+                </div>
+                {#end title#}
+                {#content#}
+                <div class="form-group">
+                    <label for="{{ form.content.id_for_label }}">Контент: </label>
+                    <br>
+                    {{ form.content }}
+                    <div class="invalid-feedback">
+                        {{ form.content.errors }}
+                    </div>
+                </div>
+                {#end content#}
+                {#photo#}
+                <div class="form-group">
+                    <label for="{{ form.photo.id_for_label }}">Постер: </label>
+                    <br>
+                    {{ form.photo }}
+                    <div class="invalid-feedback">
+                        {{ form.photo.errors }}
+                    </div>
+                </div>
+                {#end photo#}
+                {#is_published#}
+                <div class="form-group">
+                    <label for="{{ form.is_published.id_for_label }}">Опубликовать? </label>
+                    {{ form.is_published }}
+                    <div class="invalid-feedback">
+                        {{ form.is_published.errors }}
+                    </div>
+                </div>
+                {#end is_published#}
+                {#category#}
+                <div class="form-group">
+                    <label for="{{ form.category.id_for_label }}">Категория: </label>
+                    {{ form.category }}
+                    <div class="invalid-feedback">
+                        {{ form.category.errors }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.audio.id_for_label }}">Аудио: </label>
+                    <br>
+                    {{ form.audio }}
+                    <div class="invalid-feedback">
+                        {{ form.audio.errors }}
+                    </div>
+                </div>
+                {#end category#}
+                <button type="submit" class="btn btn-primary btn-block">Сохранить новость</button>
+            </form>
+        {% else %}
+            <h1><a style="text-decoration-line: none;">Вы не вошли в аккаунт</a>
+            </h1>
+        {% endif %}
+    </div>
+
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+{% endblock %}

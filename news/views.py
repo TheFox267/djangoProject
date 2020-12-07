@@ -1,14 +1,13 @@
 # Create your views here.
-import ast
 
 from django.conf import settings
 from django.contrib import messages
-from django.shortcuts import render, redirect
-from django.views.generic import ListView, DetailView, CreateView
+from django.core.mail import send_mail
+from django.shortcuts import redirect, render
+from django.views.generic import CreateView, DetailView, ListView, UpdateView
 
 from news.forms import AddNewsForm, FeedbackForm
-from news.models import News, Category
-from django.core.mail import send_mail
+from news.models import Category, News
 
 
 class AllNews(ListView):
@@ -54,7 +53,7 @@ class AddNews(CreateView):
         return super(AddNews, self).form_valid(form)
 
 
-class FeedbackNews(CreateView):
+class Feedback(CreateView):
     form_class = FeedbackForm
     template_name = 'news/feedback.html'
 
@@ -74,3 +73,9 @@ class FeedbackNews(CreateView):
             else:
                 messages.error(request, 'Ошибка при отправке письма')
                 return render(request, template_name=self.template_name, context={'form': form})
+
+
+class EditNews(UpdateView):
+    model = News
+    form_class = AddNewsForm
+    template_name = 'news/edit_news.html'
