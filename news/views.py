@@ -2,8 +2,10 @@
 
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
 from django.shortcuts import redirect, render
+from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
 
 from news.forms import AddNewsForm, FeedbackForm
@@ -15,22 +17,14 @@ class AllNews(ListView):
     template_name = 'news/all_news.html'
     context_object_name = 'all_news'
     paginate_by = 4
-
-    def get_queryset(self):
-        return News.objects.filter(is_published=True).select_related('category', 'author').order_by('-created_at')
+    queryset = News.objects.filter(is_published=True).select_related('category', 'author').order_by('-created_at')
 
 
 class DetailNews(DetailView):
     model = News
     template_name = 'news/detail_news.html'
     context_object_name = 'detail_news'
-
-    def get_queryset(self):
-        model = News.objects.get(pk=self.kwargs['pk'])
-        if self.request.user.id == model.author.id:
-            return News.objects.filter(pk=self.kwargs['pk'])
-        else:
-            return News.objects.filter(pk=self.kwargs['pk'], is_published=True)
+    queryset = News.objects.select_related('author', 'category')
 
 
 class DetailCategory(ListView):
@@ -38,9 +32,7 @@ class DetailCategory(ListView):
     template_name = 'news/detail_category.html'
     context_object_name = 'detail_category'
     paginate_by = 4
-
-    def get_queryset(self):
-        return News.objects.filter(category=self.kwargs['category_id'], is_published=True).select_related('author').order_by('-created_at')
+    queryset = News.objects.select_related('author').order_by('-created_at')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(DetailCategory, self).get_context_data(**kwargs)
@@ -48,18 +40,20 @@ class DetailCategory(ListView):
         return context
 
 
-class AddNews(CreateView):
+class AddNews(LoginRequiredMixin, CreateView):
     form_class = AddNewsForm
     template_name = 'news/add_news.html'
-
+    login_url = reverse_lazy('account:login')
+    
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super(AddNews, self).form_valid(form)
 
 
-class Feedback(CreateView):
+class Feedback(LoginRequiredMixin, CreateView):
     form_class = FeedbackForm
     template_name = 'news/feedback.html'
+    login_url = reverse_lazy('account:login')
 
     def get(self, request, *args, **kwargs):
         form = self.form_class(initial=self.initial)

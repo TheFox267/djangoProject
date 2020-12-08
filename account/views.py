@@ -1,12 +1,10 @@
-from django.contrib.auth import login
-from django.contrib.auth.views import LoginView, LogoutView
-from django.http import HttpResponse
-from django.shortcuts import render, redirect
-# Create your views here.
-from django.urls import reverse_lazy
-from django.views.generic import CreateView
-from account.forms import RegisterAccountForm, LoginAccountForm
 from django.contrib import messages
+from django.contrib.auth.views import LoginView, LogoutView
+from django.shortcuts import redirect, render
+# Create your views here.
+from django.views.generic import CreateView
+
+from account.forms import LoginAccountForm, RegisterAccountForm
 
 
 class RegisterAccount(CreateView):
@@ -31,10 +29,6 @@ class RegisterAccount(CreateView):
 class LoginAccount(LoginView):
     form_class = LoginAccountForm
     template_name = 'account/login.html'
-    success_url = reverse_lazy('news:all_news')
-
-    def get_success_url(self):
-        return self.success_url
 
 
 class LogoutAccount(LogoutView):
