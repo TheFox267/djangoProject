@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
+{% load humanize %}
 {% block title %}
-    👑Новости для королей👑
+    Новости для королей
 {% endblock %}
 {% block content %}
     {#navbar#}
@@ -20,7 +21,7 @@
             <div class="col">
                 <div class="card shadow-sm">
                     <img class="bd-placeholder-img card-img-top" focusable="false" role="img"
-                         width="100%" height="100%" src="{{ new.photo.url }}">
+                         width="100%" height="100%" src="{{ new.photo.url }}" alt="{{ new.photo.name }}">
                     <div class="card-body">
                         <h3 class="card-text">{{ new.title }}</h3>
                         <hr>
@@ -36,7 +37,7 @@
                                     </button>
                                 </form>
                             </div>
-                            <small class="text-muted">{{ new.created_at }}</small>
+                            <small class="text-muted">{{ new.created_at|naturaltime }}</small>
                         </div>
                     </div>
                 </div>

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'ckeditor',
     'ckeditor_uploader',
+    'django.contrib.humanize'
 ]
 
 MIDDLEWARE = [
@@ -67,11 +68,12 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.media',
             ],
         },
     },
 ]
-
 WSGI_APPLICATION = 'djangoProject.wsgi.application'
 
 # Database

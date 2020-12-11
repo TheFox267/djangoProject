@@ -32,19 +32,22 @@ class DetailCategory(ListView):
     template_name = 'news/detail_category.html'
     context_object_name = 'detail_category'
     paginate_by = 4
-    queryset = News.objects.select_related('author').order_by('-created_at')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(DetailCategory, self).get_context_data(**kwargs)
         context['title_category'] = Category.objects.get(pk=self.kwargs['category_id']).title
         return context
 
+    def get_queryset(self):
+        return News.objects.filter(category=self.kwargs['category_id'], is_published=1).select_related('author').order_by('-created_at')
+
 
 class AddNews(LoginRequiredMixin, CreateView):
     form_class = AddNewsForm
     template_name = 'news/add_news.html'
     login_url = reverse_lazy('account:login')
-    
+    success_message = "Новость успешна создана!"
+
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super(AddNews, self).form_valid(form)
@@ -73,7 +76,8 @@ class Feedback(LoginRequiredMixin, CreateView):
                 return render(request, template_name=self.template_name, context={'form': form})
 
 
-class EditNews(UpdateView):
+class EditNews(LoginRequiredMixin, UpdateView):
     model = News
     form_class = AddNewsForm
     template_name = 'news/edit_news.html'
+    context_object_name = 'news'

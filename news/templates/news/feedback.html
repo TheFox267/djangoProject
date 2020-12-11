@@ -5,9 +5,11 @@
 {% endblock %}
 
 {% block content %}
+    <div class="jumbotron p-4 p-md-5 text-white rounded bg-dark">
         <form action="{% url 'news:feedback' %}" method="post">
             {% csrf_token %}
             {{ form.as_p }}
             <button type="submit" class="btn btn-primary btn-block">Отправить сообщещие</button>
         </form>
+    </div>
 {% endblock %}

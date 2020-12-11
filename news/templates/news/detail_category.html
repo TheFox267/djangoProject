@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load humanize %}
 {% block title %}
     {{ title_category }}
 {% endblock %}
@@ -13,7 +14,7 @@
             <div class="col">
                 <div class="card shadow-sm">
                     <img class="bd-placeholder-img card-img-top" focusable="false" role="img"
-                         width="100%" height="100%" src="{{ category.photo.url }}">
+                         width="100%" height="100%" src="{{ category.photo.url }}" alt="{{ category.photo.name }}">
                     <div class="card-body">
                         <h3 class="card-text">{{ category.title }}</h3>
                         <hr>
@@ -28,7 +29,7 @@
                                     </button>
                                 </form>
                             </div>
-                            <small class="text-muted">{{ category.created_at }}</small>
+                            <small class="text-muted">{{ category.created_at|naturaltime }}</small>
                         </div>
                     </div>
                 </div>

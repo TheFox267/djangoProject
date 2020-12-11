@@ -8,10 +8,11 @@
     {#endnavbar#}
     {#content#}
     <div class="jumbotron p-4 p-md-5 text-white rounded bg-dark">
-        <h1 class="display-4 font-italic">Авторизация</h1>
+        <h1 class="display-4">Авторизация</h1>
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
+            <input type="hidden" value="Login">
             <button type="submit" class="btn btn-primary btn-block">Авторизироваться</button>
         </form>
     </div>

@@ -30,11 +30,12 @@
                 </li>
             {% else %}
                 <li class="nav-item dropdown active">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
                         💼 Аккаунт
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{% url 'account:login' %}">Авторизация</a>
+                        <a class="dropdown-item" href="{% url 'account:login' %}?next={{ request.path }}">Авторизация</a>
                         <a class="dropdown-item" href="{% url 'account:register' %}">Регистрация</a>
                     </div>
                 </li>

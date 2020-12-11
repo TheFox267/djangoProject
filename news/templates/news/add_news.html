@@ -6,10 +6,8 @@
 
 {% block content %}
     <div class="jumbotron p-4 p-md-5 text-white rounded bg-dark">
-        {#        {% if request.user.is_authenticated %}#}
         <form action="{% url 'news:add_news' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
-
             {{ form.non_field.errors }}
             {#title#}
             <div class="form-group">
@@ -70,12 +68,7 @@
 
             <button type="submit" class="btn btn-primary btn-block">Добавить новость</button>
         </form>
-        {#        {% else %}#}
-        {#            <h1><a style="text-decoration-line: none;">Вы не вошли в аккаунт</a>#}
-        {#            </h1>#}
-        {#        {% endif %}#}
     </div>
-
     <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
     <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
 {% endblock %}

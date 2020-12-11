@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}
-    Создать новость
+    Редактировать новость
 {% endblock %}
 
 {% block content %}
-    <div class="jumbotron p-4 p-md-5 text-white rounded bg-dark">
-        {% if request.user.is_authenticated %}
+    {% if news.author_id == request.user.id %}
+        <div class="jumbotron p-4 p-md-5 text-white rounded bg-dark">
             <form action="{% url 'news:edit_news' news.pk %}" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ form.non_field.errors }}
@@ -67,12 +67,13 @@
                 {#end category#}
                 <button type="submit" class="btn btn-primary btn-block">Сохранить новость</button>
             </form>
-        {% else %}
-            <h1><a style="text-decoration-line: none;">Вы не вошли в аккаунт</a>
-            </h1>
-        {% endif %}
-    </div>
-
-    <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
-    <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+        </div>
+        <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+        <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+    {% else %}
+        <div class="jumbotron p-4 p-md-5 text-white rounded bg-dark">
+            <h1 class="display-4">Данной новости либо не существует, либо Вы не имеете доступа к ней</h1>
+            <h1 class="display-5"><a style="text-decoration: none;" href="{% url 'news:all_news' %}">Вернуться на главную страницу</a></h1>
+        </div>
+    {% endif %}
 {% endblock %}
