@@ -1,14 +1,13 @@
 # Create your views here.
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.mail import send_mail
-from django.http import Http404
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, DetailView, ListView, UpdateView
+from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 
 from news.forms import AddNewsForm, FeedbackForm
 from news.models import Category, News
@@ -29,6 +28,7 @@ class AllNews(ListView):
     context_object_name = 'all_news'
     paginate_by = 4
     queryset = News.objects.filter(is_published=True).select_related('category', 'author').order_by('-created_at')
+    allow_empty = False
 
 
 class DetailCategory(ListView):
@@ -100,6 +100,35 @@ class AddNews(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         return super(AddNews, self).form_valid(form)
 
 
+class EditNews(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, UpdateView):
+    """
+    Выводит форму для редактирования существующих новостей
+    """
+    model = News
+    form_class = AddNewsForm
+    template_name = 'news/edit_news.html'
+    context_object_name = 'news'
+    success_message = 'Ваша новость успешно отредактирована'
+    login_url = reverse_lazy('account:login')
+
+    def test_func(self):
+        obj = self.get_object()
+        return obj.author.id == self.request.user.id
+
+
+class DeleteNews(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, DeleteView):
+    model = News
+    success_message = 'Ваша новость успешно удалена'
+    template_name = 'news/delete_news.html'
+    login_url = reverse_lazy('account:login')
+    context_object_name = 'delete_news'
+    success_url = reverse_lazy('news:all_news')
+
+    def test_func(self):
+        obj = self.get_object()
+        return obj.author.id == self.request.user.id
+
+
 class Feedback(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     """
     Выводит форму для отправки обращения на почту
@@ -124,21 +153,3 @@ class Feedback(LoginRequiredMixin, SuccessMessageMixin, CreateView):
             else:
                 messages.error(request, 'Ошибка при отправке письма')
                 return render(request, template_name=self.template_name, context={'form': form})
-
-
-class EditNews(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
-    """
-    Выводит форму для редактирования существующих новостей
-    """
-    model = News
-    form_class = AddNewsForm
-    template_name = 'news/edit_news.html'
-    context_object_name = 'news'
-    success_message = 'Ваша новость успешно отредактирована'
-
-    def get_queryset(self):
-        model = News.objects.select_related('author').get(pk=self.kwargs['pk'])
-        if self.request.user.id == model.author.id:
-            return News.objects.filter(pk=self.kwargs['pk'])
-        else:
-            raise Http404('Данной новости не существует')

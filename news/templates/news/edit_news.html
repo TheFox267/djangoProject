@@ -7,7 +7,7 @@
 {% block content %}
     {#    {% if news.author_id == request.user.id %}#}
     <div class="jumbotron p-4 p-md-5 text-white rounded bg-dark">
-        <form action="{% url 'news:edit_news' news.pk %}" method="post" enctype="multipart/form-data">
+        <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.non_field.errors }}
             {#title#}

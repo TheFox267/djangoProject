@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    Редактировать новость
+{% endblock %}
+
+{% block content %}
+    <div class="jumbotron p-4 p-md-5 text-white rounded bg-dark">
+        <form method="post">
+            {% csrf_token %}
+            <h1 class="display-4">Вы уверены, что хотите удалить новость: "{{ delete_news.title }}"?</h1>
+            <button type="submit" class="btn btn-success">Подтвердить</button>
+            <a class="btn btn-danger" href="{% url 'news:detail_user_news' delete_news.author_id %}"
+               role="button">Отменить</a>
+        </form>
+    </div>
+{% endblock %}

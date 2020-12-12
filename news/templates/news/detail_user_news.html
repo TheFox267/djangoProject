@@ -31,6 +31,8 @@
                                         далее</a>
                                     <a class="btn btn-sm btn-outline-secondary" href="{% url 'news:edit_news' user_news.pk %}"
                                        role="button">Редактировать</a>
+                                    <a class="btn btn-sm btn-outline-secondary" href="{% url 'news:delete_news' user_news.pk %}"
+                                       role="button">Удалить</a>
                                 {% else %}
                                     <a class="btn btn-sm btn-outline-secondary" href="{{ user_news.get_absolute_url }}" role="button">Читать
                                         далее</a>
