@@ -1,5 +1,4 @@
 # Create your views here.
-
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -9,7 +8,7 @@ from django.core.mail import send_mail
 from django.http import Http404
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
+from django.views.generic import CreateView, DetailView, ListView, UpdateView
 
 from news.forms import AddNewsForm, FeedbackForm
 from news.models import Category, News

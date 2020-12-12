@@ -9,7 +9,9 @@
     {#content#}
     <h1 class="display-4">{{ author_name }}</h1>
 
+
     <div class="row row-cols-2">
+
         {% for user_news in detail_user_news %}
             <div class="col">
                 <div class="card shadow-sm">
@@ -24,11 +26,15 @@
                         <div class="d-flex justify-content-between align-items-center">
 
                             <div class="btn-group">
-                                <form action="{{ user_news.get_absolute_url }}">
-                                    <button type="submit" class="btn btn-sm btn-outline-secondary">
-                                        Читать далее
-                                    </button>
-                                </form>
+                                {% if author_name.id == request.user.id %}
+                                    <a class="btn btn-sm btn-outline-secondary" href="{{ user_news.get_absolute_url }}" role="button">Читать
+                                        далее</a>
+                                    <a class="btn btn-sm btn-outline-secondary" href="{% url 'news:edit_news' user_news.pk %}"
+                                       role="button">Редактировать</a>
+                                {% else %}
+                                    <a class="btn btn-sm btn-outline-secondary" href="{{ user_news.get_absolute_url }}" role="button">Читать
+                                        далее</a>
+                                {% endif %}
                             </div>
                             <small class="text-muted">{{ user_news.created_at|naturaltime }}</small>
                         </div>
