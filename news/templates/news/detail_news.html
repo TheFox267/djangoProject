@@ -6,32 +6,24 @@
     {#navbar#}
     {#endnavbar#}
     {#content#}
-    {% if detail_news.author_id == request.user.id %}
-        <div class="jumbotron p-4 p-md-5 text-white rounded bg-dark">
-            <h1 class="display-4">{{ detail_news.title }}</h1>
-            <p class="lead mb-">Автор: {{ detail_news.author }}</p>
-            <p class="lead mb-">Категория: <a style="text-decoration: none;" href="{{ detail_news.category.get_absolute_url }}"
-                                              class="text-white font-weight-bold">{{ detail_news.category.title }}</a></p>
-            <p class="lead mb-">Дата публикации: {{ detail_news.created_at }}</p>
-            {% if detail_news.audio %}
-                <audio controls>
-                    <source src="{{ detail_news.audio.url }}" type="audio/mpeg">
-                    Тег audio не поддерживается вашим браузером.
-                    <a href="{{ detail_news.audio.url }}">Скачайте музыку</a>.
-                </audio>
-            {% else %}
+    <div class="jumbotron p-4 p-md-5 text-white rounded bg-dark">
+        <h1 class="display-4">{{ detail_news.title }}</h1>
+        <p class="lead mb-">Автор: {{ detail_news.author }}</p>
+        <p class="lead mb-">Категория: <a style="text-decoration: none;" href="{{ detail_news.category.get_absolute_url }}"
+                                          class="text-white font-weight-bold">{{ detail_news.category.title }}</a></p>
+        <p class="lead mb-">Дата публикации: {{ detail_news.created_at }}</p>
+        {% if detail_news.audio %}
+            <audio controls>
+                <source src="{{ detail_news.audio.url }}" type="audio/mpeg">
+                Тег audio не поддерживается вашим браузером.
+                <a href="{{ detail_news.audio.url }}">Скачайте музыку</a>.
+            </audio>
+        {% else %}
 
-            {% endif %}
+        {% endif %}
 
-            <hr style="color: #ffffff;">
-            <h4 class="display-5">{{ detail_news.content|safe }}</h4>
-        </div>
-    {% else %}
-        <div class="jumbotron p-4 p-md-5 text-white rounded bg-dark">
-            <h1 class="display-4">Данной новости либо не существует, либо Вы не имеете доступа к ней</h1>
-            <h1 class="display-5"><a style="text-decoration: none;" href="{% url 'news:all_news' %}">Вернуться на главную страницу</a></h1>
-        </div>
-    {% endif %}
-
+        <hr style="color: #ffffff;">
+        <h4 class="display-5">{{ detail_news.content|safe }}</h4>
+    </div>
     {#endcontent#}
 {% endblock %}

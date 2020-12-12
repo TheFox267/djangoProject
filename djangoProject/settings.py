@@ -122,6 +122,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 INTERNAL_IPS = [
     # ...
     '127.0.0.1',
@@ -138,7 +139,11 @@ EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
-
+CKEDITOR_RESTRICT_BY_USER = True
+CKEDITOR_BROWSE_SHOW_DIRS = True
+CKEDITOR_IMAGE_BACKEND = "pillow"
+CKEDITOR_FORCE_JPEG_COMPRESSION = True
+CKEDITOR_ALLOW_NONIMAGE_FILES = False
 CKEDITOR_CONFIGS = {
     'default': {
         'skin': 'moono-lisa',

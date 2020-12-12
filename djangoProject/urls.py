@@ -19,12 +19,15 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 
+from djangoProject.views import redirect_main
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('news/', include('news.urls')),
     path('account/', include('account.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('__debug__/', include(debug_toolbar.urls)),
+    path('', redirect_main),
 
 ]
 if settings.DEBUG:

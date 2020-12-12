@@ -1,36 +1,36 @@
 {% extends 'base.html' %}
 {% load humanize %}
 {% block title %}
-    {{ title_category }}
+    Новости {{ author_name }}
 {% endblock %}
 {% block content %}
     {#navbar#}
     {#endnavbar#}
     {#content#}
-    <h1 class="display-4">{{ title_category }}</h1>
+    <h1 class="display-4">{{ author_name }}</h1>
 
     <div class="row row-cols-2">
-        {% for category in detail_category %}
+        {% for user_news in detail_user_news %}
             <div class="col">
                 <div class="card shadow-sm">
                     <img class="bd-placeholder-img card-img-top" focusable="false" role="img"
-                         width="100%" height="100%" src="{{ category.photo.url }}" alt="{{ category.photo.name }}">
+                         width="100%" height="100%" src="{{ user_news.photo.url }}" alt="{{ user_news.photo.name }}">
                     <div class="card-body">
-                        <h3 class="card-text">{{ category.title }}</h3>
+                        <h3 class="card-text">{{ user_news.title }}</h3>
                         <hr>
-                        <a style="text-decoration: none;" href="{% url 'news:detail_user_news' category.author_id %}"><p
-                        >{{ category.author }}</p></a>
+                        <a style="text-decoration: none;" href="{{ user_news.category.get_absolute_url }}"><p>{{ user_news.category }}</p>
+                        </a>
                         <hr>
                         <div class="d-flex justify-content-between align-items-center">
 
                             <div class="btn-group">
-                                <form action="{{ category.get_absolute_url }}">
+                                <form action="{{ user_news.get_absolute_url }}">
                                     <button type="submit" class="btn btn-sm btn-outline-secondary">
                                         Читать далее
                                     </button>
                                 </form>
                             </div>
-                            <small class="text-muted">{{ category.created_at|naturaltime }}</small>
+                            <small class="text-muted">{{ user_news.created_at|naturaltime }}</small>
                         </div>
                     </div>
                 </div>

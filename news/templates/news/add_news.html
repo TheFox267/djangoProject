@@ -23,6 +23,7 @@
                 <div class="form-group">
                     <label for="{{ form.content.id_for_label }}">Контент: </label>
                     <br>
+                    {{ form.media }}
                     {{ form.content }}
                     <div class="invalid-feedback">
                         {{ form.content.errors }}

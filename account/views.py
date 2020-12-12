@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import redirect, render
 # Create your views here.
 from django.views.generic import CreateView
@@ -26,9 +27,10 @@ class RegisterAccount(CreateView):
             return render(request, self.template_name, {'form': form})
 
 
-class LoginAccount(LoginView):
+class LoginAccount(SuccessMessageMixin, LoginView):
     form_class = LoginAccountForm
     template_name = 'account/login.html'
+    success_message = f'Вы успешно авторизировались'
 
 
 class LogoutAccount(LogoutView):
