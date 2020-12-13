@@ -13,6 +13,8 @@ class AddNewsForm(forms.ModelForm):
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'category': forms.Select(attrs={'class': 'form-control'}),
+            'photo': forms.FileInput(attrs={'class': 'form-control-file', 'type': 'file'}),
+            'audio': forms.FileInput(attrs={'class': 'form-control-file', 'type': 'file'}),
         }
 
 

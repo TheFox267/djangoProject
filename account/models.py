@@ -16,7 +16,7 @@ class Profile(models.Model):
     avatar = models.ImageField(upload_to='avatar/%Y/%m/%d/', verbose_name='аватар', default='avatar/default_avatar.png')
     bio = models.TextField(verbose_name='о себе', blank=True)
     gender = models.CharField(choices=Gender.choices, default=Gender.NS, verbose_name='пол', max_length=2)
-    date_of_birth = models.DateField(verbose_name='дата рождения', blank=True)
+    date_of_birth = models.DateField(verbose_name='дата рождения', blank=True, null=True)
     native_city = models.CharField(max_length=100, verbose_name='родной город', blank=True)
     languages = models.CharField(max_length=100, verbose_name='языки', blank=True)
     country = models.CharField(max_length=100, verbose_name='страна', blank=True)
@@ -31,4 +31,9 @@ class Profile(models.Model):
         return f'Профиль: {self.user.username}'
 
     def get_absolute_url(self):
-        return reverse('account:profile_user', kwargs={'pk': self.pk})
+        return reverse('account:profile_user', kwargs={'pk': self.user.pk})
+
+    class Meta:
+        verbose_name = 'профиль'
+        verbose_name_plural = 'профиля'
+        ordering = ['user', 'job']

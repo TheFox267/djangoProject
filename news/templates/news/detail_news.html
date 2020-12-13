@@ -8,7 +8,8 @@
     {#content#}
     <div class="jumbotron p-4 p-md-5 text-white rounded bg-dark">
         <h1 class="display-4">{{ detail_news.title }}</h1>
-        <p class="lead mb-">Автор: {{ detail_news.author }}</p>
+        <p class="lead mb-">Автор: <a style="text-decoration: none;" href="{{ detail_news.author.profile.get_absolute_url }}"
+                                      class="text-white font-weight-bold">{{ detail_news.author }}</a></p>
         <p class="lead mb-">Категория: <a style="text-decoration: none;" href="{{ detail_news.category.get_absolute_url }}"
                                           class="text-white font-weight-bold">{{ detail_news.category.title }}</a></p>
         <p class="lead mb-">Дата публикации: {{ detail_news.created_at }}</p>

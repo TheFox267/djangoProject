@@ -18,7 +18,8 @@
                         <div class="col-md-12 col-sm-12 col-xs-12 user-detail-section1 text-center">
                             <br>
                             {% if user_profile.id == request.user.id %}
-                                <a href="#" class="btn btn-primary btn-block">Редактировать</a>
+                                <a href="{% url 'account:edit_profile' user_profile.id %}"
+                                   class="btn btn-primary btn-block">Редактировать</a>
                             {% else %}
                                 <a href="#" class="btn btn-primary btn-block">Подписаться</a>
                                 <a href="#" class="btn btn-warning btn-block">Написать сообщение</a>

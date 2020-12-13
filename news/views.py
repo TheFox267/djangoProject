@@ -90,10 +90,12 @@ class AddNews(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     """
     Выводит форму для создания новости
     """
+    model = News
     form_class = AddNewsForm
     template_name = 'news/add_news.html'
     login_url = reverse_lazy('account:login')
     success_message = "Новость успешна создана"
+    queryset = News.objects.select_related('category')
 
     def form_valid(self, form):
         form.instance.author = self.request.user
