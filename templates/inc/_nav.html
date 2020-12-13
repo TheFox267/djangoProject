@@ -7,13 +7,15 @@
                 <a class="nav-link active" href="{% url 'news:add_news' %}">🖊 Добавить новость<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item dropdown active">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                   aria-expanded="false">
                     🗃 Категории
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     {% get_list_category as categories %}
                     {% for c in categories %}
-                        <a class="dropdown-item" href="{{ c.get_absolute_url }}">{{ c.title }}<span class="badge badge-light">{{ c.cnt }}</span></a>
+                        <a class="dropdown-item" href="{{ c.get_absolute_url }}">{{ c.title }}<span
+                                class="badge badge-light">{{ c.cnt }}</span></a>
                     {% endfor %}
                 </div>
             </li>
@@ -24,7 +26,7 @@
                         💼 Добро пожаловать, {{ user.username }}!
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Мой профиль</a>
+                        <a class="dropdown-item" href="{% url 'account:profile_user' request.user.id %}">Мой профиль</a>
                         <a class="dropdown-item" href="{% url 'news:detail_user_news' request.user.id %}">Мои новости</a>
                         <a class="dropdown-item" href="{% url 'news:feedback' %}">Обратная связь</a>
                         <a class="dropdown-item" href="{% url 'account:logout' %}">Выйти</a>

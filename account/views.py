@@ -1,11 +1,21 @@
 from django.contrib import messages
+from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import redirect, render
 # Create your views here.
-from django.views.generic import CreateView
+from django.views.generic import CreateView, DetailView
 
 from account.forms import LoginAccountForm, RegisterAccountForm
+
+
+class ProfileAccount(DetailView):
+    model = User
+    template_name = 'account/detail_profile.html'
+    context_object_name = 'user_profile'
+
+    def get_queryset(self):
+        return User.objects.filter(pk=self.kwargs['pk']).select_related('profile')
 
 
 class RegisterAccount(CreateView):

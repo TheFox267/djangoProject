@@ -1,0 +1,189 @@
+{% extends 'base.html' %}
+{% block title %}
+    Профиль {{ user_profile.username }}
+{% endblock %}
+{% block content %}
+    {#navbar#}
+    {#endnavbar#}
+    {#content#}
+    <div class="jumbotron p-md-5 text-white rounded bg-dark">
+        <div class="row">
+            <div class="row user-left-part">
+                <div class="col-xl-3 user-profile-part pull-left">
+                    <div class="row">
+                        <div class="col-xl-12 user-image text-center">
+                            <img src="{{ user_profile.profile.avatar.url }}" class="rounded-circle" alt="avatar"
+                                 style="height: 256px; width: 256px;">
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12 user-detail-section1 text-center">
+                            <br>
+                            {% if user_profile.id == request.user.id %}
+                                <a href="#" class="btn btn-primary btn-block">Редактировать</a>
+                            {% else %}
+                                <a href="#" class="btn btn-primary btn-block">Подписаться</a>
+                                <a href="#" class="btn btn-warning btn-block">Написать сообщение</a>
+                            {% endif %}
+
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12 user-detail-section1 text-center">
+                            <div class="col-md-12 col-sm-12 user-detail-section2 pull-left">
+                                <br>
+                                <div class="border"></div>
+                                <span>Подписчиков: 320</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-9 pull-right profile-right-section">
+                    <div class="row profile-right-section-row">
+                        <div class="col-md-12 profile-header">
+                            <div class="row">
+                                <div class="col-md-8 col-sm-6 col-xs-6 profile-header-section1 pull-left">
+                                    <h1>{{ user_profile.first_name }} {{ user_profile.last_name }} - {{ user_profile.profile.job }}</h1>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <ul class="nav nav-tabs" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" href="#profile" role="tab" data-toggle="tab"><i
+                                                    class="fas fa-user-circle"></i>Основная информация</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#buzz" role="tab" data-toggle="tab"><i
+                                                    class="fas fa-info-circle"></i>
+                                                Доп. информация</a>
+                                        </li>
+                                    </ul>
+                                    <!-- Tab panes -->
+                                    <div class="tab-content">
+                                        <div role="tabpanel" class="tab-pane fade show active" id="profile">
+                                            <br>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <label>Id:</label>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <p>{{ user_profile.pk }}</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <label>Эл.почта:</label>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <p>{{ user_profile.email }}</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <label>Пол:</label>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <p>{{ user_profile.profile.get_gender_display }}</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <label>Мобильный телефон:</label>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    {% if user_profile.profile.mobile_phone %}
+                                                        <p>{{ user_profile.profile.mobile_phone }}</p>
+                                                    {% else %}
+                                                        <p>-</p>
+                                                    {% endif %}
+
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <label>День рождения:</label>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    {% if user_profile.profile.date_of_birth %}
+                                                        <p>{{ user_profile.profile.date_of_birth }}</p>
+                                                    {% else %}
+                                                        <p>-</p>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <label>Языки:</label>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    {% if user_profile.profile.languages %}
+                                                        <p>{{ user_profile.profile.languages }}</p>
+                                                    {% else %}
+                                                        <p>-</p>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <label>Доп. телефон:</label>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    {% if user_profile.profile.add_phone %}
+                                                        <p>{{ user_profile.profile.add_phone }}</p>
+                                                    {% else %}
+                                                        <p>-</p>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <label>Skype:</label>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    {% if user_profile.profile.skype %}
+                                                        <p>{{ user_profile.profile.skype }}</p>
+                                                    {% else %}
+                                                        <p>-</p>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <label>Личный сайт:</label>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    {% if user_profile.profile.personal_site %}
+                                                        <p>{{ user_profile.profile.personal_site }}</p>
+                                                    {% else %}
+                                                        <p>-</p>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div role="tabpanel" class="tab-pane fade" id="buzz">
+                                            <br>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <label>О себе:</label>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    {% if user_profile.profile.bio %}
+                                                        <p>{{ user_profile.profile.bio }}</p>
+                                                    {% else %}
+                                                        <p>-</p>
+                                                    {% endif %}
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
