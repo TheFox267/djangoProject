@@ -21,23 +21,19 @@ class LoginAccountForm(AuthenticationForm):
     password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Тута пароль'}), max_length=50, label='Пароль')
 
 
-class DateInput(forms.DateInput):
-    input_type = 'date'
-
-
 class EditProfileAccountForm(forms.ModelForm):
     bio = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Тута о себе', 'row': 1}), label='О себе', required=False)
-    avatar = forms.FileField(widget=forms.FileInput(attrs={'class': 'form-control-file', 'type': 'file'}), label='Аватар')
+    avatar = forms.FileField(widget=forms.FileInput(attrs={'class': 'form-control-file', 'type': 'file'}), label='Аватар', help_text='Тут')
     gender = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-control'}), choices=Profile.Gender.choices, label='Пол', required=False)
-    date_of_birth = forms.DateField(widget=DateInput(attrs={'class': 'form-control', 'placeholder': 'Тута дата'}), label='День рождения',
-                                    required=False)
+    date_of_birth = forms.DateField(widget=forms.DateInput(attrs={'class': 'form-control', 'placeholder': 'Тута дата', 'type': 'date'}), label='День рождения',
+                                    required=False, localize=False)
     native_city = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Тута родной город'}), label='Родной город', required=False)
     languages = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Тута языки'}), label='Языки', required=False)
     country = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Тута страна'}), label='Страна', required=False)
     city = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Тута город'}), label='Город', required=False)
-    mobile_phone = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Тута мобильный телефон', 'type': 'tel', 'id': 'phone'}),
+    mobile_phone = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Тута мобильный телефон', 'type': 'tel'}),
                                    label='Мобильный телефон', required=False)
-    add_phone = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Тута доп. телефон', 'type': 'tel', 'id': 'phone'}),
+    add_phone = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Тута доп. телефон', 'type': 'tel'}),
                                 label='Доп. телефон', required=False)
     skype = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Тута skype'}), label='Skype', required=False)
     personal_site = forms.URLField(widget=forms.URLInput(attrs={'class': 'form-control', 'placeholder': 'Тута ссылка на твой сайт'}), label='Личный сайт', required=False)
